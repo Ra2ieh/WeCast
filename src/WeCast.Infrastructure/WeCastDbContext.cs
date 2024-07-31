@@ -1,4 +1,8 @@
-﻿namespace WeCast.Infrastructure;
+﻿using WeCast.Domain.Entities;
+using Hourly = WeCast.Infrastructure.Services.Models.Hourly;
+using HourlyUnits = WeCast.Infrastructure.Services.Models.HourlyUnits;
+
+namespace WeCast.Infrastructure;
 
 public class WeCastDbContext : DbContext
 {
@@ -9,21 +13,20 @@ public class WeCastDbContext : DbContext
     }
 
     #endregion
-    //public DbSet<Vendor> Vendor { get; set; }
-    //public DbSet<Agent> Agent { get; set; }
-    //public DbSet<Order> Order { get; set; }
-    //public DbSet<Trip> Trip { get; set; }
-    //public DbSet<TripStatus> TripStatus { get; set; }
-    //public DbSet<DelayReport> Delay_Reports { get; set; }
-    //public DbSet<DelayQueue> DelayQueue { get; set; }
+    public DbSet<WeatherData> WeatherData { get; set; }
+    public DbSet<HourlyUnit> HourlyUnits { get; set; }
+    public DbSet<HourlyData> Hourly { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.ApplyConfiguration(new TripStatusEntityConfiguration());
-        //modelBuilder.ApplyConfiguration(new VendorEntityConfiguration());
-        //modelBuilder.ApplyConfiguration(new AgentEntityConfiguration());
-        //modelBuilder.ApplyConfiguration(new ConsumerEntityConfiguration());
+        modelBuilder.Entity<WeatherData>()
+            .OwnsOne(w => w.HourlyUnits);
+
+        modelBuilder.Entity<HourlyData>()
+            .HasOne(h => h.WeatherData)
+            .WithMany(w => w.Hourly)
+            .HasForeignKey(h => h.WeatherDataId);
 
     }
 }

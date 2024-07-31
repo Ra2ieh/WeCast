@@ -30,7 +30,6 @@
     <Folder Include="ExternalServices\" />
     <Folder Include="Migrations\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

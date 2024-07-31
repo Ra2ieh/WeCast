@@ -12,7 +12,7 @@ public static class ServiceInstallerExtensions
             var allTypes = startupProjectAssembly.SelectMany(a => a.GetTypes());
 
             var installers = allTypes
-                .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(IServiceInstaller).IsAssignableFrom(c))
+                .Where(c => c.IsClass && typeof(IServiceInstaller).IsAssignableFrom(c))
                 .Select(Activator.CreateInstance).Cast<IServiceInstaller>().ToList();
 
             installers.ForEach(i => i.InstallServices(services, appSettings));

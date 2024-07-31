@@ -8,7 +8,6 @@ namespace WeCast.Api
 
             // Add services to the container.
             builder.Services.AddMvc();
-            builder.Services.AddApiVersioning();
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WeCastWebAPI", Version = "v1" });
